@@ -1,7 +1,6 @@
 import Pagination from "./pagination"
-import { useState, useEffect } from 'react'
-/* This example requires Tailwind CSS v2.0+ */
-  
+
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -18,6 +17,7 @@ import { useState, useEffect } from 'react'
             </p>
           </div>
         </div>
+        {games ? 
         <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:-mx-6 md:mx-0 md:rounded-lg bg-white">
           <table className="min-w-full divide-y divide-gray-300">
             <thead>
@@ -118,7 +118,7 @@ import { useState, useEffect } from 'react'
             </tbody>
           </table>
 
-        </div>
+        </div> : ''}
         <div>
         <Pagination 
           resultBeginning={resultBeginning} 

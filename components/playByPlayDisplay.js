@@ -1,7 +1,7 @@
 import Filters from './filters'
-import PlayByPlayNew from './playByPlayNew'
+import PlayByPlay from './playByPlay'
 
-export default function ExampleTwo({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults}) {
+export default function PlayByPlayDisplay({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults}) {
   return (
     <div>
       <div className="relative flex flex-col bg-rose-950">
@@ -11,7 +11,7 @@ export default function ExampleTwo({playByPlay, switchTabs, currentPage, changeP
               <div className="h-full py-6 px-4 sm:px-6 lg:px-8">
                 <div className="relative h-full" style={{ minHeight: '50rem' }}>
                   <div className="absolute inset-0 ring-4 ring-offset-4 ring-offset-yellow-100 ring-yellow-500 rounded-lg bg-orange-100">
-                    <PlayByPlayNew 
+                    <PlayByPlay
                       playByPlay={playByPlay} 
                       switchTabs={switchTabs}
                       currentPage={currentPage}

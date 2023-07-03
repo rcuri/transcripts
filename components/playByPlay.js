@@ -2,7 +2,7 @@ import Pagination from "./pagination"
 import MyTabs from "./myTabs"
 
 
-  export default function PlayByPlayNew({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults}) {
+  export default function PlayByPlay({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults}) {
     return (
         <div className="px-4 pt-4 sm:px-6 lg:px-8">
           <div className="sm:flex sm:items-center">

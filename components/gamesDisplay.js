@@ -43,7 +43,7 @@ const teams = [
   { team_id: 1610612743, name: 'Denver Nuggets' }
 ]
 
-export default function Example({activeGame, setActiveGame, getPlayByPlayData}) {
+export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayData}) {
   const [season, setSeason] = useState({})
   const [hometeam, setHometeam] = useState({})
   const [visitorteam, setVisitorteam] = useState({})
@@ -56,15 +56,12 @@ export default function Example({activeGame, setActiveGame, getPlayByPlayData}) 
 
   const paginate = (page, total, per) => {
     const beginning = ((page - 1) * per) + 1
-    console.log("beginning number" + beginning)
     const output = {
       beginning: ((Number(page) - 1) * Number(per)) + 1,
       end: page * per
     }
     if (output['end'] > total)
       output['end'] = total
-    console.log(per + " per")
-    console.log(output['beginning'] + " "+ "beginning")
     return output
 }
 

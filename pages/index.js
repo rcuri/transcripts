@@ -1,5 +1,5 @@
-import Example from '../components/example'
-import ExampleTwo from '../components/exampleTwo'
+import GamesDisplay from '../components/gamesDisplay'
+import PlayByPlayDisplay from '../components/playByPlayDisplay'
 import { useState, useEffect } from "react";
 import Landing from '../components/landing';
 import Transcript from '../components/transcript';
@@ -135,7 +135,7 @@ export default function Home() {
     const resp = await fetch(url)
     const playByPlay = await resp.json()
     setPlayByPlay(playByPlay['data'])
-
+    console.log(playByPlay['data'])
     setTotalPbpResults(playByPlay['total'])
     const pagination = paginate(playByPlay['page'], playByPlay['total'], playByPlay['per_page'])
     setPbpResultsBeginning(pagination['beginning'])
@@ -208,13 +208,13 @@ export default function Home() {
    <main>
     <div>
       <Landing />
-      <Example
+      <GamesDisplay
         activeGame={activeGame}
         setActiveGame={setActiveGame} 
         getPlayByPlayData={getPlayByPlayData}
       />
       {playByPlay ?
-      <ExampleTwo 
+      <PlayByPlayDisplay 
         playByPlay={playByPlay}
         switchTabs={switchTabs}
         currentPage={currentPbpPage}

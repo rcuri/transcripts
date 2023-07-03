@@ -64,25 +64,13 @@
               scope="col"
               className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
             >
-              Person 1 Type
-            </th>
-            <th
-              scope="col"
-              className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-            >
               Player 1 Name
             </th>
             <th
               scope="col"
               className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
             >
-              Player 1 Team ID
-            </th>
-            <th
-              scope="col"
-              className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-            >
-              Person 2 Type
+              Player 1 Team Name
             </th>
             <th
               scope="col"
@@ -94,14 +82,7 @@
               scope="col"
               className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
             >
-              Player 2 Team ID
-            </th> 
-
-            <th
-              scope="col"
-              className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-            >
-              Person 3 Type
+              Player 2 Team Name
             </th> 
             <th
               scope="col"
@@ -113,7 +94,7 @@
               scope="col"
               className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
             >
-              Player 3 Team ID
+              Player 3 Team Name
             </th>                                                                                                                                                                                                                                                                                             
           </tr>
         </thead>        
@@ -134,7 +115,7 @@
                       'hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell'
                     )}
                   >
-                    {event.event_msg_type_code}
+                    {event.event_type_value}
                   </td>
                   <td
                     className={classNames(
@@ -199,14 +180,6 @@
                       'px-3 py-3.5 text-sm text-gray-500'
                     )}
                   >
-                    {event.person1_type}
-                  </td>
-                  <td
-                    className={classNames(
-                      eventIdx === 0 ? '' : 'border-t border-gray-200',
-                      'px-3 py-3.5 text-sm text-gray-500'
-                    )}
-                  >
                     {event.player1_name}
                   </td>
                   <td
@@ -215,15 +188,7 @@
                       'px-3 py-3.5 text-sm text-gray-500'
                     )}
                   >
-                    {event.player1_team_id}
-                  </td>
-                  <td
-                    className={classNames(
-                      eventIdx === 0 ? '' : 'border-t border-gray-200',
-                      'px-3 py-3.5 text-sm text-gray-500'
-                    )}
-                  >
-                    {event.person2_type}
+                    {event.player1_team_name}
                   </td>
                   <td
                     className={classNames(
@@ -239,16 +204,8 @@
                       'px-3 py-3.5 text-sm text-gray-500'
                     )}
                   >
-                    {event.player2_team_id}
-                  </td>     
-                  <td
-                    className={classNames(
-                      eventIdx === 0 ? '' : 'border-t border-gray-200',
-                      'px-3 py-3.5 text-sm text-gray-500'
-                    )}
-                  >
-                    {event.person3_type}
-                  </td>     
+                    {event.player2_team_name}
+                  </td>       
                   <td
                     className={classNames(
                       eventIdx === 0 ? '' : 'border-t border-gray-200',
@@ -263,7 +220,7 @@
                       'px-3 py-3.5 text-sm text-gray-500'
                     )}
                   >
-                    {event.player3_team_id}
+                    {event.player3_team_name}
                   </td>     
                 </tr>
               ))}
