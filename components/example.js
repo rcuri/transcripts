@@ -4,17 +4,33 @@ import { useState, useEffect } from "react";
 
 const seasons = [
   {},
-  { id: 1, name: '1997-1998' },
-  { id: 2, name: '1998-1999' },
-  { id: 3, name: '1999-2000' },
-  { id: 4, name: '2000-2001' },
-  { id: 5, name: '2001-2002' },
-  { id: 6, name: '2002-2003' },
-  { id: 7, name: '2003-2004' },
-  { id: 8, name: '2004-2005' },
-  { id: 9, name: '2005-2006' },
-  { id: 10, name: '2006-2007' },
-]  
+  { id: 1, name: '1997-98' },
+  { id: 2, name: '1998-99' },
+  { id: 3, name: '1999-00' },
+  { id: 4, name: '2000-01' },
+  { id: 5, name: '2001-02' },
+  { id: 6, name: '2002-03' },
+  { id: 7, name: '2003-04' },
+  { id: 8, name: '2004-05' },
+  { id: 9, name: '2005-06' },
+  { id: 10, name: '2006-07' },
+  { id: 11, name: '2007-08' },
+  { id: 12, name: '2008-09' },
+  { id: 13, name: '2009-10' },
+  { id: 14, name: '2010-11' },
+  { id: 15, name: '2011-12' },
+  { id: 16, name: '2012-13' },
+  { id: 17, name: '2013-14' },
+  { id: 18, name: '2014-15' },
+  { id: 19, name: '2015-16' },
+  { id: 20, name: '2016-17' },
+  { id: 21, name: '2017-18' },
+  { id: 22, name: '2018-19' },
+  { id: 23, name: '2019-20' },
+  { id: 24, name: '2020-21' },
+  { id: 25, name: '2021-22' },
+  { id: 26, name: '2022-23' }
+]
 
 const teams = [
   {  },
@@ -31,24 +47,101 @@ export default function Example({activeGame, setActiveGame, getPlayByPlayData}) 
   const [season, setSeason] = useState({})
   const [hometeam, setHometeam] = useState({})
   const [visitorteam, setVisitorteam] = useState({})
-  const [currentPage, setCurrentPage] = useState(1)
-
   const [games, setGames] = useState([])
+  const [currentGamePage, setCurrentGamePage] = useState(1)
+  const [totalResults, setTotalResults] = useState(0)
+  const [resultBeginning, setResultBeginning] = useState(0)
+  const [resultEnding, setResultEnding] = useState(0)
+
+
+  const paginate = (page, total, per) => {
+    const beginning = ((page - 1) * per) + 1
+    console.log("beginning number" + beginning)
+    const output = {
+      beginning: ((Number(page) - 1) * Number(per)) + 1,
+      end: page * per
+    }
+    if (output['end'] > total)
+      output['end'] = total
+    console.log(per + " per")
+    console.log(output['beginning'] + " "+ "beginning")
+    return output
+}
+
+
+  const changeGamePage = async (direction) => {
+    const queryStrings = []
+    if (season?.name) {
+      queryStrings.push("season=" + season.name)
+    }    
+    if (direction === 'next') {
+      var destinationPageValue = currentGamePage + 1
+    }
+    else if (direction === 'previous') {
+      var destinationPageValue = currentGamePage - 1
+    }
+    const destinationPageString = "page_number=" + destinationPageValue
+    queryStrings.push(destinationPageString)
+    if (hometeam?.team_id) {
+      queryStrings.push("home_team_id=" + hometeam.team_id)
+    }
+    if (visitorteam?.team_id) {
+      queryStrings.push("visitor_team_id=" + visitorteam.team_id)
+    }
+
+    const queryStringParameters = queryStrings.join('&')
+    const url = 'http://localhost:3000/games?' + queryStringParameters
+    const resp = await fetch(url)
+    const games = await resp.json()
+    const gamesData = games['data']
+    const responseTotalResults = games['total']
+    setTotalResults(responseTotalResults)
+    setGames(gamesData)
+    if (direction === 'next')
+      setCurrentGamePage(s => s + 1)
+    else if (direction === 'previous')
+      setCurrentGamePage(s => s - 1)   
+    const pagination = paginate(games['page'], games['total'], games['per_page'])
+    const pageBeginning = pagination['beginning']
+    const pageEnding = pagination['end']
+    setResultBeginning(pageBeginning)
+    setResultEnding(pageEnding)
+ 
+  }
 
   const getAllGames = async () => {
     const url = 'http://localhost:3000/games'
     const resp = await fetch(url)
     const games = await resp.json()
-    setGames(games)
-    setCurrentPage(1)
+    const gamesData = games['data']
+    const pagination = paginate(games['page'], games['total'], games['per_page'])
+    const pageBeginning = pagination['beginning']
+    const pageEnding = pagination['end']
+    setResultBeginning(pageBeginning)
+    setResultEnding(pageEnding)
+    const responseTotalResults = games['total']
+    setTotalResults(responseTotalResults)
+
+    setGames(gamesData)
+    setCurrentGamePage(1)
+  }
+
+  const resetGames = async () => {
+    getAllGames()
+    setSeason({})
+    setHometeam({})
+    setVisitorteam({})
   }
 
   const filterGames = async () => {
     const queryStrings = []
-    if (hometeam !== {} && hometeam !== null && hometeam?.team_id) {
+    if (season?.name) {
+      queryStrings.push("season=" + season.name)
+    }
+    if (hometeam?.team_id) {
       queryStrings.push("home_team_id=" + hometeam.team_id)
     }
-    if (visitorteam !== {} && visitorteam !== null && visitorteam?.team_id) {
+    if (visitorteam?.team_id) {
       queryStrings.push("visitor_team_id=" + visitorteam.team_id)
     }
     const queryStringParameters = queryStrings.join('&')
@@ -56,69 +149,36 @@ export default function Example({activeGame, setActiveGame, getPlayByPlayData}) 
     const url = 'http://localhost:3000/games?' + queryStringParameters
     const resp = await fetch(url)
     const games = await resp.json()
-    setGames(games)
-    setCurrentPage(1)
-  }
-  function incrementPage() {
-    setCurrentPage(s => s + 1);
-  }
-  function decrementPage() {
-    setCurrentPage(s => s - 1);
-  }
-  const getNextPage = async () => {
-    incrementPage()
-    const queryStrings = []
-    if (hometeam !== {} && hometeam !== null && hometeam?.team_id) {
-      queryStrings.push("home_team_id=" + hometeam.team_id)
-    }
-    if (visitorteam !== {} && visitorteam !== null && visitorteam?.team_id) {
-      queryStrings.push("visitor_team_id=" + visitorteam.team_id)
-    }
-    const nextPageValue = currentPage + 1
-    const nextPageString = "page_number=" + nextPageValue
-    queryStrings.push(nextPageString)
-    const queryStringParameters = queryStrings.join('&')
-    const url = 'http://localhost:3000/games?' + queryStringParameters
-    const resp = await fetch(url)
-    const games = await resp.json()
-    setGames(games)
+    const gamesData = games['data']
+    setGames(gamesData)
+    setCurrentGamePage(1)
+    const pagination = paginate(games['page'], games['total'], games['per_page'])
+    console.log(pagination)
+    console.log(games)
+    const pageBeginning = pagination['beginning']
+    const pageEnding = pagination['end']
+    setResultBeginning(pageBeginning)
+    setResultEnding(pageEnding)
+    const responseTotalResults = games['total']
+    setTotalResults(responseTotalResults)
+
   }
 
-  const getPreviousPage = async () => {
-    decrementPage()
-    const queryStrings = []
-    if (hometeam !== {} && hometeam !== null && hometeam?.team_id) {
-      queryStrings.push("home_team_id=" + hometeam.team_id)
-    }
-    if (visitorteam !== {} && visitorteam !== null && visitorteam?.team_id) {
-      queryStrings.push("visitor_team_id=" + visitorteam.team_id)
-    }
-    const nextPageValue = currentPage - 1
-    const nextPageString = "page_number=" + nextPageValue
-    queryStrings.push(nextPageString)
-    const queryStringParameters = queryStrings.join('&')
-    const url = 'http://localhost:3000/games?' + queryStringParameters
-    const resp = await fetch(url)
-    const games = await resp.json()
-    setGames(games)
-  }
-
+  
   useEffect(() => {
     getAllGames()
   }, [])
 
   return (
     <div>
-      <div className="relative flex flex-col">
-        {/* 3 column wrapper */}
+      <div className="relative flex flex-col bg-rose-950">
         <div className="flex-grow w-full max-w-7xl mx-auto xl:px-8 lg:flex">
 
-          <div className="flex-1 min-w-0 bg-white xl:flex">
-            <div className="border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-white">
+          <div className="flex-1 min-w-0 bg-rose-950 xl:flex">
+            <div className=" xl:border-b-0 xl:flex-shrink-0 xl:w-64  bg-rose-950">
               <div className="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
-                {/* Start left column area */}
                 <div className="h-full relative" style={{ height: '36rem' }}>
-                  <div className="absolute inset-0 border-2 border-gray-200 border-dashed rounded-lg">
+                  <div className="absolute inset-0 ring-4 ring-offset-4 ring-offset-yellow-100 ring-yellow-500 rounded-lg bg-orange-100">
                     <Filters 
                       seasons={seasons} 
                       teams={teams} 
@@ -129,31 +189,31 @@ export default function Example({activeGame, setActiveGame, getPlayByPlayData}) 
                       visitorteam={visitorteam}
                       setVisitorteam={setVisitorteam}
                       onFilter={filterGames}
+                      onReset={resetGames}
                       />
                   </div>
                 </div>
-                {/* End left column area */}
               </div>
             </div>
 
-            <div className="bg-white lg:min-w-0 lg:flex-1">
+            <div className="bg-rose-950 lg:min-w-0 lg:flex-1">
               <div className="h-full py-6 px-4 sm:px-6 lg:px-8">
-                {/* Start main area*/}
                 <div className="relative h-full" style={{ minHeight: '56rem' }}>
-                  <div className="absolute inset-0 border-2 border-gray-200 border-dashed rounded-lg">
+                  <div className="absolute inset-0 ring-4 ring-offset-4 ring-offset-yellow-100 ring-yellow-500 rounded-lg bg-orange-100">
                     <Games 
                       games={games} 
                       setGames={setGames} 
                       activeGame={activeGame} 
                       setActiveGame={setActiveGame} 
-                      onNextPage={getNextPage} 
-                      onPreviousPage={getPreviousPage} 
-                      currentPage={currentPage} 
+                      currentPage={currentGamePage} 
                       getPlayByPlayData={getPlayByPlayData}
+                      changeGamePage={changeGamePage}
+                      resultBeginning={resultBeginning}
+                      resultEnding={resultEnding}
+                      totalResults={totalResults}
                     />
                   </div>
                 </div>
-                {/* End main area */}
               </div>
             </div>
           </div>

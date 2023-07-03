@@ -6,10 +6,10 @@ import { useState, useEffect } from 'react'
     return classes.filter(Boolean).join(' ')
   }
   
-  export default function Games({games, setGames, activeGame, setActiveGame, onNextPage, onPreviousPage, currentPage, getPlayByPlayData}) {
+  export default function Games({games, onNextPage, onPreviousPage, currentPage, getPlayByPlayData, changeGamePage, resultBeginning, resultEnding, totalResults}) {
 
     return (
-      <div className="px-4 sm:px-6 lg:px-8">
+      <div className="px-4 pt-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">Games</h1>
@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react'
             </p>
           </div>
         </div>
-        <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:-mx-6 md:mx-0 md:rounded-lg">
+        <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:-mx-6 md:mx-0 md:rounded-lg bg-white">
           <table className="min-w-full divide-y divide-gray-300">
             <thead>
               <tr>
@@ -62,7 +62,6 @@ import { useState, useEffect } from 'react'
                   >
                     <div className="font-medium text-gray-900">
                       {game.matchup}
-                      {activeGame === game.game_id ? <span className="text-indigo-600">(Current Plan)</span> : null}
                     </div>
                     {planIdx !== 0 ? <div className="absolute right-0 left-6 -top-px h-px bg-gray-200" /> : null}
                   </td>
@@ -121,7 +120,15 @@ import { useState, useEffect } from 'react'
 
         </div>
         <div>
-        <Pagination resultBeginning={"1"} resultEnding={"10"} totalResults={"23"} onNextPage={onNextPage} onPreviousPage={onPreviousPage} currentPage={currentPage}/>
+        <Pagination 
+          resultBeginning={resultBeginning} 
+          resultEnding={resultEnding} 
+          totalResults={totalResults} 
+          onNextPage={onNextPage} 
+          onPreviousPage={onPreviousPage} 
+          currentPage={currentPage}
+          changePage={changeGamePage}
+        />
 
         </div>
       </div>

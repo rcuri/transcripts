@@ -5,7 +5,7 @@
   
   export default function PbpTable({pbpEvents}) {
     return (
-        <div className="ring-1 ring-gray-300 sm:-mx-6 md:mx-0 md:rounded-bl-lg md:rounded-br-lg md:rounded-tr-lg overflow-x-auto">
+        <div className="ring-1 ring-gray-300 sm:-mx-6 md:mx-0 md:rounded-bl-lg md:rounded-br-lg md:rounded-t-lg overflow-x-auto">
         <table className="divide-y divide-gray-300 table-auto whitespace-nowrap">
         <thead>
           <tr>
