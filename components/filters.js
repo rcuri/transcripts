@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import Menu from './menu'
+import Menu from "./menu"
 import React from "react";
 
   export default function Filters({seasons, teams, season, setSeason, hometeam, setHometeam, visitorteam, setVisitorteam, onFilter, onReset}) {
@@ -9,7 +9,7 @@ import React from "react";
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">Filters</h1>
             <p className="mt-2 text-sm text-gray-700">
-              Select the filters you'd like to apply to filter games.
+              Select the filters you would like to apply to filter games.
             </p>
           </div>
         </div>
