@@ -1,7 +1,6 @@
-import Filters from './filters'
 import PlayByPlay from './playByPlay'
 
-export default function PlayByPlayDisplay({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults}) {
+export default function PlayByPlayDisplay({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults, isGenerateDisabled}) {
   return (
     <div>
       <div className="relative flex flex-col bg-rose-950">
@@ -20,6 +19,7 @@ export default function PlayByPlayDisplay({playByPlay, switchTabs, currentPage, 
                       pbpResultsBeginning={pbpResultsBeginning}
                       pbpResultsEnding={pbpResultsEnding}
                       totalPbpResults={totalPbpResults}
+                      isGenerateDisabled={isGenerateDisabled}
                     />
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import Pagination from "./pagination"
 import MyTabs from "./myTabs"
 
 
-  export default function PlayByPlay({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults}) {
+  export default function PlayByPlay({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults, isGenerateDisabled}) {
     return (
         <div className="px-4 pt-4 sm:px-6 lg:px-8">
           <div className="sm:flex sm:items-center">
@@ -16,6 +16,7 @@ import MyTabs from "./myTabs"
               <button
                 onClick={() => generateTranscript()}
                 type="button"
+                disabled={isGenerateDisabled}
                 className="drop-shadow-md inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
               >
                 Generate Transcript

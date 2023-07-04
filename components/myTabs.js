@@ -15,7 +15,7 @@ export default function MyTabs({playByPlay, switchTabs}) {
       className="min-w-full border-separate" style={{ borderSpacing: 0 }}
       defaultIndex={0}
     >
-      <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 my-3">
+      <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 my-3 drop-shadow-lg">
       <Tab
               key={1}
               className={({ selected }) =>

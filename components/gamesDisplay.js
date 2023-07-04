@@ -32,6 +32,7 @@ const seasons = [
   { id: 26, name: '2022-23' }
 ]
 
+
 const teams = [
   {  },
   { team_id: 1610612737, name: 'Atlanta Hawks' },
@@ -40,7 +41,30 @@ const teams = [
   { team_id: 1610612740, name: 'New Orleans Pelicans' },
   { team_id: 1610612741, name: 'Chicago Bulls' },
   { team_id: 1610612742, name: 'Dallas Mavericks' },
-  { team_id: 1610612743, name: 'Denver Nuggets' }
+  { team_id: 1610612743, name: 'Denver Nuggets' },
+  { team_id: 1610612744, name: 'Golden State Warriors' },
+  { team_id: 1610612745, name: 'Houston Rockets' },
+  { team_id: 1610612746, name: 'Los Angeles Clippers' },
+  { team_id: 1610612747, name: 'Los Angeles Lakers' },
+  { team_id: 1610612748, name: 'Miami Heat' },
+  { team_id: 1610612749, name: 'Milwaukee Bucks' },
+  { team_id: 1610612750, name: 'Minnesota Timberwolves' },
+  { team_id: 1610612751, name: 'Brooklyn Nets' },
+  { team_id: 1610612752, name: 'New York Knicks' },
+  { team_id: 1610612753, name: 'Orlando Magic' },
+  { team_id: 1610612754, name: 'Indiana Pacers' },
+  { team_id: 1610612755, name: 'Philadelphia 76ers' },
+  { team_id: 1610612756, name: 'Phoenix Suns' },
+  { team_id: 1610612757, name: 'Portland Trail Blazers' },
+  { team_id: 1610612758, name: 'Sacramento Kings' },
+  { team_id: 1610612759, name: 'San Antonio Spurs' },
+  { team_id: 1610612760, name: 'Oklahoma City Thunder' },
+  { team_id: 1610612761, name: 'Toronto Raptors' },
+  { team_id: 1610612762, name: 'Utah Jazz' },
+  { team_id: 1610612763, name: 'Memphis Grizzlies' },
+  { team_id: 1610612764, name: 'Washington Wizards' },
+  { team_id: 1610612765, name: 'Detroit Pistons' },
+  { team_id: 1610612766, name: 'Charlotte Hornets' }    
 ]
 
 export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayData}) {
@@ -55,7 +79,6 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
 
 
   const paginate = (page, total, per) => {
-    const beginning = ((page - 1) * per) + 1
     const output = {
       beginning: ((Number(page) - 1) * Number(per)) + 1,
       end: page * per
@@ -103,7 +126,6 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
     const pageEnding = pagination['end']
     setResultBeginning(pageBeginning)
     setResultEnding(pageEnding)
- 
   }
 
   const getAllGames = async () => {
@@ -142,23 +164,34 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
       queryStrings.push("visitor_team_id=" + visitorteam.team_id)
     }
     const queryStringParameters = queryStrings.join('&')
-    console.log("queryString + " + queryStringParameters)
     const url = 'http://localhost:3000/games?' + queryStringParameters
-    const resp = await fetch(url)
-    const games = await resp.json()
-    const gamesData = games['data']
-    setGames(gamesData)
-    setCurrentGamePage(1)
-    const pagination = paginate(games['page'], games['total'], games['per_page'])
-    console.log(pagination)
-    console.log(games)
-    const pageBeginning = pagination['beginning']
-    const pageEnding = pagination['end']
-    setResultBeginning(pageBeginning)
-    setResultEnding(pageEnding)
-    const responseTotalResults = games['total']
-    setTotalResults(responseTotalResults)
-
+    try {
+      const response = await fetch(url)
+      if (!response.ok) {
+        if (response.status === 404) {
+        } else if (response.status === 403) {
+        } else {
+        }
+        setGames([])
+        setCurrentGamePage(0)
+        setResultBeginning(0)
+        setResultEnding(0)
+        setTotalResults(0)
+        throw new Error(response);
+      }
+      const games = await response.json()
+      const gamesData = games['data']
+      setGames(gamesData)
+      setCurrentGamePage(1)
+      const pagination = paginate(games['page'], games['total'], games['per_page'])
+      const pageBeginning = pagination['beginning']
+      const pageEnding = pagination['end']
+      setResultBeginning(pageBeginning)
+      setResultEnding(pageEnding)
+      const responseTotalResults = games['total']
+      setTotalResults(responseTotalResults)
+    } catch(exception) {
+    }
   }
 
   

@@ -1,97 +1,9 @@
 import GamesDisplay from '../components/gamesDisplay'
 import PlayByPlayDisplay from '../components/playByPlayDisplay'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Landing from '../components/landing';
 import Transcript from '../components/transcript';
-
-const sampleTranscripts = [{'id': 1,
-'speaker_begin_time': '0:00',
-'speaker_name': 'Kevin Harlan',
-'line': " Harlan: And we're underway here in Boston as the Celtics host the Cavaliers."},
-{'id': 2,
-'speaker_begin_time': '0:04',
-'speaker_name': 'Reggie Miller',
-'line': " That's right, Kevin. It's always exciting to see these two teams go head-to-head."},
-{'id': 3,
-'speaker_begin_time': '0:10',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: The tip-off goes to Horford, and the Celtics start with possession.'},
-{'id': 4,
-'speaker_begin_time': '0:14',
-'speaker_name': 'Reggie Miller',
-'line': " A good start for the Celtics, winning the tip-off. Let's see if they can convert it into points."},
-{'id': 5,
-'speaker_begin_time': '0:20',
-'speaker_name': 'Kevin Harlan',
-'line': " Harlan: Horford with a fadeaway jumper, and it's good!"},
-{'id': 6,
-'speaker_begin_time': '0:24',
-'speaker_name': 'Reggie Miller',
-'line': " Nice shot by Horford. He's showing off his scoring touch early in the game."},
-{'id': 7,
-'speaker_begin_time': '0:30',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: Mitchell misses a pull-up jumper for the Cavaliers.'},
-{'id': 8,
-'speaker_begin_time': '0:34',
-'speaker_name': 'Reggie Miller',
-'line': " Tough break for Mitchell. He couldn't find the mark on that shot."},
-{'id': 9,
-'speaker_begin_time': '0:40',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: Horford grabs the rebound for the Celtics.'},
-{'id': 10,
-'speaker_begin_time': '0:44',
-'speaker_name': 'Reggie Miller',
-'line': " Horford doing it all for the Celtics. He's making an impact on both ends of the court."},
-{'id': 11,
-'speaker_begin_time': '0:50',
-'speaker_name': 'Kevin Harlan',
-'line': " Harlan: Brown with a running layup, and it's good! Smart with the assist."},
-{'id': 12,
-'speaker_begin_time': '0:55',
-'speaker_name': 'Reggie Miller',
-'line': ' Great teamwork by the Celtics. Brown finishes strong at the rim.'},
-{'id': 13,
-'speaker_begin_time': '1:00',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: Allen responds with a cutting layup for the Cavaliers.'},
-{'id': 14,
-'speaker_begin_time': '1:04',
-'speaker_name': 'Reggie Miller',
-'line': ' Nice finish by Allen. He took advantage of the opening in the defense.'},
-{'id': 15,
-'speaker_begin_time': '1:10',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: Tatum misses a driving floating jump shot for the Celtics.'},
-{'id': 16,
-'speaker_begin_time': '1:14',
-'speaker_name': 'Reggie Miller',
-'line': " Tough shot attempt by Tatum. He couldn't get it to fall."},
-{'id': 17,
-'speaker_begin_time': '1:20',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: Williams III grabs the rebound for the Celtics.'},
-{'id': 18,
-'speaker_begin_time': '1:24',
-'speaker_name': 'Reggie Miller',
-'line': " Williams III with the hustle play. He's making his presence felt on the boards."},
-{'id': 19,
-'speaker_begin_time': '1:30',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: Williams III with an alley-oop dunk! Horford with the assist.'},
-{'id': 20,
-'speaker_begin_time': '1:34',
-'speaker_name': 'Reggie Miller',
-'line': ' What a finish by Williams III! Horford set him up perfectly for the dunk.'},
-{'id': 21,
-'speaker_begin_time': '1:40',
-'speaker_name': 'Kevin Harlan',
-'line': ' Harlan: And that brings us to the end of the first quarter. The Celtics are leading the Cavaliers 6-2.'},
-{'id': 22,
-'speaker_begin_time': '1:46',
-'speaker_name': 'Reggie Miller',
-'line': " The Celtics have started strong in this game. They're playing with energy and executing well. The Cavaliers will need to regroup and find their rhythm in the second quarter."}]
+import { toast } from "react-toastify";
 
   const speakers = {
     'Kevin Harlan': '/kevin-harlan-avatar.png',
@@ -104,22 +16,20 @@ export default function Home() {
   const [playByPlay, setPlayByPlay] = useState(null)
   const [currentPbpPage, setCurrentPbpPage] = useState(1)
   const [transcripts, setTranscripts] = useState(null)
+  const [transactionId, setTransactionId] = useState(null)
+  const [generateDisabled, setGenerateDisabled] = useState(false)
 
   const [totalPbpResults, setTotalPbpResults] = useState(0)
   const [pbpResultsBeginning, setPbpResultsBeginning] = useState(0)
   const [pbpResultsEnding, setPbpResultsEnding] = useState(0)
 
   const paginate = (page, total, per) => {
-    const beginning = ((page - 1) * per) + 1
-    console.log("beginning number" + beginning)
     const output = {
       beginning: ((Number(page) - 1) * Number(per)) + 1,
       end: page * per
     }
     if (output['end'] > total)
       output['end'] = total
-    console.log(per + " per")
-    console.log(output['beginning'] + " "+ "beginning")
     return output
 }
 
@@ -130,12 +40,10 @@ export default function Home() {
     const queryStrings = []
     queryStrings.push("period=" + currentPeriod)
     const queryStringParameters = queryStrings.join('&')
-    console.log("queryString + " + queryStringParameters)
     const url = 'http://localhost:3000/play_by_play/' + activeGame + '?' + queryStringParameters
     const resp = await fetch(url)
     const playByPlay = await resp.json()
     setPlayByPlay(playByPlay['data'])
-    console.log(playByPlay['data'])
     setTotalPbpResults(playByPlay['total'])
     const pagination = paginate(playByPlay['page'], playByPlay['total'], playByPlay['per_page'])
     setPbpResultsBeginning(pagination['beginning'])
@@ -143,24 +51,34 @@ export default function Home() {
   }
 
   const getPlayByPlayData = async (game_id) => {
-    setActiveGame(game_id)
-    setCurrentPbpPage(1)
     const queryStrings = []
     if (activePeriod) {
       queryStrings.push("period=" + activePeriod)
     }
-    console.log(game_id)
     const queryStringParameters = queryStrings.join('&')
-    console.log("queryString + " + queryStringParameters)
     const url = 'http://localhost:3000/play_by_play/' + game_id + '/?' + queryStringParameters
-    const resp = await fetch(url)
-    const playByPlay = await resp.json()
-    setPlayByPlay(playByPlay['data'])
-
-    setTotalPbpResults(playByPlay['total'])
-    const pagination = paginate(playByPlay['page'], playByPlay['total'], playByPlay['per_page'])
-    setPbpResultsBeginning(pagination['beginning'])
-    setPbpResultsEnding(pagination['end'])
+    try {
+      const response = await fetch(url)
+      if (!response.ok) {
+        if (response.status === 404) {
+        } else if (response.status === 403) {
+        } else {
+        }
+        throw new Error(response);
+      }
+      else {
+        const playByPlay = await response.json()
+        setActiveGame(game_id)
+        setCurrentPbpPage(1)
+        setPlayByPlay(playByPlay['data'])
+        setTotalPbpResults(playByPlay['total'])
+        const pagination = paginate(playByPlay['page'], playByPlay['total'], playByPlay['per_page'])
+        setPbpResultsBeginning(pagination['beginning'])
+        setPbpResultsEnding(pagination['end'])
+      }
+    } catch(exception) {
+      toast('Play-by-play data not available for selected game. Check back another day!', { hideProgressBar: true, autoClose: 2500, type: 'error', position: 'bottom-right' })
+    }
   }
 
 
@@ -183,7 +101,6 @@ export default function Home() {
     const currentPeriodString = "period=" + activePeriod
     queryStrings.push(currentPeriodString)
     const queryStringParameters = queryStrings.join('&')
-    console.log(queryStringParameters)
     const url = 'http://localhost:3000/play_by_play/' + activeGame + '?' + queryStringParameters
     const resp = await fetch(url)
     const playByPlay = await resp.json()
@@ -200,9 +117,55 @@ export default function Home() {
   }
   
   const generateTranscript = async () => {
-    setTranscripts(sampleTranscripts)
+    var body = {
+      game_id: activeGame,
+      page_number: currentPbpPage,
+      period: activePeriod
+    }
+    body = JSON.stringify(body)
+    try {
+      const response = await fetch("https://nq1th2rlqh.execute-api.us-east-1.amazonaws.com/dev/submitTranscriptRequest", {
+        headers: {
+          Accept: 'application.json',
+          "Content-Type": "application/json",
+        },
+        body: body,
+        method: "POST"
+      });
+      if (!response.ok) {
+        if (response.status === 429) {
+        } else if (response.status === 403) {
+        } else {
+        }
+        throw new Error(response);
+      }
+      const transcripts = await response.json();
+      const transactionId = transcripts['transaction_id']
+      setTransactionId(transactionId)
+      setGenerateDisabled(true)
+      setTimeout(() => setGenerateDisabled(false), 20000);
+    } catch(exception) {
+    }
+    toast('Successfully created transcript request. Scroll below and refresh.', { hideProgressBar: true, autoClose: 3500, type: 'success', position: 'bottom-right' })
   }
   
+  const retrieveTranscriptStatus = async () => {
+    try {
+      const url = "https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/transcripts/" + transactionId
+      const response = await fetch(url);
+      if (!response.ok) {
+        if (response.status === 429) {
+        } else if (response.status === 403) {
+        } else {
+        }
+        throw new Error(response);
+      }
+      const transcripts = await response.json();
+      const transcriptsData = transcripts['data']
+      setTranscripts(transcriptsData)
+    } catch(exception) {
+    }
+  }
 
   return (
    <main>
@@ -223,10 +186,15 @@ export default function Home() {
         pbpResultsEnding={pbpResultsEnding}
         totalPbpResults={totalPbpResults}
         generateTranscript={generateTranscript}
+        isGenerateDisabled={generateDisabled}
       /> : ''
     }
-    {transcripts ? 
-      <Transcript transcripts={transcripts} speakers={speakers} />
+    {transactionId ?
+      <Transcript 
+        transcripts={transcripts} 
+        speakers={speakers} 
+        refreshAction={retrieveTranscriptStatus}  
+      />
       : ''
     }
     </div>

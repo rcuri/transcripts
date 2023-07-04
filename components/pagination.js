@@ -12,7 +12,7 @@ export default function Pagination({resultBeginning, resultEnding, totalResults,
         <div className="flex-1 flex justify-between sm:justify-end">
           <button
             onClick={() => changePage('previous')}
-            disabled={currentPage === 1}            
+            disabled={currentPage <= 1}            
             className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
           >
             Previous
