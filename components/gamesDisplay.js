@@ -34,7 +34,7 @@ const seasons = [
 
 
 const teams = [
-  {  },
+  {},
   { team_id: 1610612737, name: 'Atlanta Hawks' },
   { team_id: 1610612738, name: 'Boston Celtics' },
   { team_id: 1610612739, name: 'Cleveland Cavaliers' },
@@ -64,10 +64,10 @@ const teams = [
   { team_id: 1610612763, name: 'Memphis Grizzlies' },
   { team_id: 1610612764, name: 'Washington Wizards' },
   { team_id: 1610612765, name: 'Detroit Pistons' },
-  { team_id: 1610612766, name: 'Charlotte Hornets' }    
+  { team_id: 1610612766, name: 'Charlotte Hornets' }
 ]
 
-export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayData}) {
+export default function GamesDisplay({ activeGame, setActiveGame, getPlayByPlayData }) {
   const [season, setSeason] = useState({})
   const [hometeam, setHometeam] = useState({})
   const [visitorteam, setVisitorteam] = useState({})
@@ -86,14 +86,14 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
     if (output['end'] > total)
       output['end'] = total
     return output
-}
+  }
 
 
   const changeGamePage = async (direction) => {
     const queryStrings = []
     if (season?.name) {
       queryStrings.push("season=" + season.name)
-    }    
+    }
     if (direction === 'next') {
       var destinationPageValue = currentGamePage + 1
     }
@@ -120,7 +120,7 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
     if (direction === 'next')
       setCurrentGamePage(s => s + 1)
     else if (direction === 'previous')
-      setCurrentGamePage(s => s - 1)   
+      setCurrentGamePage(s => s - 1)
     const pagination = paginate(games['page'], games['total'], games['per_page'])
     const pageBeginning = pagination['beginning']
     const pageEnding = pagination['end']
@@ -190,11 +190,11 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
       setResultEnding(pageEnding)
       const responseTotalResults = games['total']
       setTotalResults(responseTotalResults)
-    } catch(exception) {
+    } catch (exception) {
     }
   }
 
-  
+
   useEffect(() => {
     getAllGames()
   }, [])
@@ -209,9 +209,9 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
               <div className="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
                 <div className="h-full relative" style={{ height: '36rem' }}>
                   <div className="absolute inset-0 ring-4 ring-offset-4 ring-offset-yellow-100 ring-yellow-500 rounded-lg bg-orange-100">
-                    <Filters 
-                      seasons={seasons} 
-                      teams={teams} 
+                    <Filters
+                      seasons={seasons}
+                      teams={teams}
                       season={season}
                       setSeason={setSeason}
                       hometeam={hometeam}
@@ -220,7 +220,7 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
                       setVisitorteam={setVisitorteam}
                       onFilter={filterGames}
                       onReset={resetGames}
-                      />
+                    />
                   </div>
                 </div>
               </div>
@@ -230,12 +230,12 @@ export default function GamesDisplay({activeGame, setActiveGame, getPlayByPlayDa
               <div className="h-full py-6 px-4 sm:px-6 lg:px-8">
                 <div className="relative h-full" style={{ minHeight: '56rem' }}>
                   <div className="absolute inset-0 ring-4 ring-offset-4 ring-offset-yellow-100 ring-yellow-500 rounded-lg bg-orange-100">
-                    <Games 
-                      games={games} 
-                      setGames={setGames} 
-                      activeGame={activeGame} 
-                      setActiveGame={setActiveGame} 
-                      currentPage={currentGamePage} 
+                    <Games
+                      games={games}
+                      setGames={setGames}
+                      activeGame={activeGame}
+                      setActiveGame={setActiveGame}
+                      currentPage={currentGamePage}
                       getPlayByPlayData={getPlayByPlayData}
                       changeGamePage={changeGamePage}
                       resultBeginning={resultBeginning}

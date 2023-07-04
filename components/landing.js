@@ -17,7 +17,7 @@ export default function Landing() {
       <div className="relative max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="md:ml-auto md:w-1/2 md:pl-10 text-center">
           <div className="justify-center flex">
-          <MicrophoneIcon height={200} />
+            <MicrophoneIcon height={200} />
           </div>
           <p className="mt-2 text-white text-3xl font-extrabold tracking-tight sm:text-8xl">TranscriptAI</p>
           <p className="mt-3 text-lg text-gray-300">

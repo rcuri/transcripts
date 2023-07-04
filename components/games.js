@@ -1,23 +1,23 @@
 import Pagination from "./pagination"
 
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
-  
-  export default function Games({games, onNextPage, onPreviousPage, currentPage, getPlayByPlayData, changeGamePage, resultBeginning, resultEnding, totalResults}) {
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
-    return (
-      <div className="px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:items-center">
-          <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Games</h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A list of all the games for the selected filters.
-            </p>
-          </div>
+export default function Games({ games, onNextPage, onPreviousPage, currentPage, getPlayByPlayData, changeGamePage, resultBeginning, resultEnding, totalResults }) {
+
+  return (
+    <div className="px-4 pt-4 sm:px-6 lg:px-8">
+      <div className="sm:flex sm:items-center">
+        <div className="sm:flex-auto">
+          <h1 className="text-xl font-semibold text-gray-900">Games</h1>
+          <p className="mt-2 text-sm text-gray-700">
+            A list of all the games for the selected filters.
+          </p>
         </div>
-        {games ? 
+      </div>
+      {games ?
         <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:-mx-6 md:mx-0 md:rounded-lg bg-white">
           <table className="min-w-full divide-y divide-gray-300">
             <thead>
@@ -119,19 +119,18 @@ import Pagination from "./pagination"
           </table>
 
         </div> : ''}
-        <div>
-        <Pagination 
-          resultBeginning={resultBeginning} 
-          resultEnding={resultEnding} 
-          totalResults={totalResults} 
-          onNextPage={onNextPage} 
-          onPreviousPage={onPreviousPage} 
+      <div>
+        <Pagination
+          resultBeginning={resultBeginning}
+          resultEnding={resultEnding}
+          totalResults={totalResults}
+          onNextPage={onNextPage}
+          onPreviousPage={onPreviousPage}
           currentPage={currentPage}
           changePage={changeGamePage}
         />
 
-        </div>
       </div>
-    )
-  }
-  
+    </div>
+  )
+}

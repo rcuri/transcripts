@@ -1,6 +1,6 @@
 import PlayByPlay from './playByPlay'
 
-export default function PlayByPlayDisplay({playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults, isGenerateDisabled}) {
+export default function PlayByPlayDisplay({ playByPlay, switchTabs, currentPage, changePBPPage, generateTranscript, pbpResultsBeginning, pbpResultsEnding, totalPbpResults, isGenerateDisabled }) {
   return (
     <div>
       <div className="relative flex flex-col bg-rose-950">
@@ -11,7 +11,7 @@ export default function PlayByPlayDisplay({playByPlay, switchTabs, currentPage, 
                 <div className="relative h-full" style={{ minHeight: '50rem' }}>
                   <div className="absolute inset-0 ring-4 ring-offset-4 ring-offset-yellow-100 ring-yellow-500 rounded-lg bg-orange-100">
                     <PlayByPlay
-                      playByPlay={playByPlay} 
+                      playByPlay={playByPlay}
                       switchTabs={switchTabs}
                       currentPage={currentPage}
                       changePBPPage={changePBPPage}

@@ -5,10 +5,6 @@ import Landing from '../components/landing';
 import Transcript from '../components/transcript';
 import { toast } from "react-toastify";
 
-  const speakers = {
-    'Kevin Harlan': '/kevin-harlan-avatar.png',
-    'Reggie Miller': '/reggie-miller-avatar.png'
-  }
 
 export default function Home() {
   const [activeGame, setActiveGame] = useState(null)
@@ -23,6 +19,10 @@ export default function Home() {
   const [pbpResultsBeginning, setPbpResultsBeginning] = useState(0)
   const [pbpResultsEnding, setPbpResultsEnding] = useState(0)
 
+  const speakers = {
+    'Kevin Harlan': '/kevin-harlan-avatar.png',
+    'Reggie Miller': '/reggie-miller-avatar.png'
+  }
   const paginate = (page, total, per) => {
     const output = {
       beginning: ((Number(page) - 1) * Number(per)) + 1,
@@ -31,7 +31,7 @@ export default function Home() {
     if (output['end'] > total)
       output['end'] = total
     return output
-}
+  }
 
   const switchTabs = async (tabIndex) => {
     const currentPeriod = tabIndex + 1
@@ -76,7 +76,7 @@ export default function Home() {
         setPbpResultsBeginning(pagination['beginning'])
         setPbpResultsEnding(pagination['end'])
       }
-    } catch(exception) {
+    } catch (exception) {
       toast('Play-by-play data not available for selected game. Check back another day!', { hideProgressBar: true, autoClose: 2500, type: 'error', position: 'bottom-right' })
     }
   }
@@ -115,7 +115,7 @@ export default function Home() {
     setPbpResultsBeginning(pagination['beginning'])
     setPbpResultsEnding(pagination['end'])
   }
-  
+
   const generateTranscript = async () => {
     var body = {
       game_id: activeGame,
@@ -144,11 +144,11 @@ export default function Home() {
       setTransactionId(transactionId)
       setGenerateDisabled(true)
       setTimeout(() => setGenerateDisabled(false), 20000);
-    } catch(exception) {
+    } catch (exception) {
     }
     toast('Successfully created transcript request. Scroll below and refresh.', { hideProgressBar: true, autoClose: 3500, type: 'success', position: 'bottom-right' })
   }
-  
+
   const retrieveTranscriptStatus = async () => {
     try {
       const url = "https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/transcripts/" + transactionId
@@ -163,41 +163,41 @@ export default function Home() {
       const transcripts = await response.json();
       const transcriptsData = transcripts['data']
       setTranscripts(transcriptsData)
-    } catch(exception) {
+    } catch (exception) {
     }
   }
 
   return (
-   <main>
-    <div>
-      <Landing />
-      <GamesDisplay
-        activeGame={activeGame}
-        setActiveGame={setActiveGame} 
-        getPlayByPlayData={getPlayByPlayData}
-      />
-      {playByPlay ?
-      <PlayByPlayDisplay 
-        playByPlay={playByPlay}
-        switchTabs={switchTabs}
-        currentPage={currentPbpPage}
-        changePBPPage={changePBPPage}
-        pbpResultsBeginning={pbpResultsBeginning}
-        pbpResultsEnding={pbpResultsEnding}
-        totalPbpResults={totalPbpResults}
-        generateTranscript={generateTranscript}
-        isGenerateDisabled={generateDisabled}
-      /> : ''
-    }
-    {transactionId ?
-      <Transcript 
-        transcripts={transcripts} 
-        speakers={speakers} 
-        refreshAction={retrieveTranscriptStatus}  
-      />
-      : ''
-    }
-    </div>
-   </main>
+    <main>
+      <div>
+        <Landing />
+        <GamesDisplay
+          activeGame={activeGame}
+          setActiveGame={setActiveGame}
+          getPlayByPlayData={getPlayByPlayData}
+        />
+        {playByPlay ?
+          <PlayByPlayDisplay
+            playByPlay={playByPlay}
+            switchTabs={switchTabs}
+            currentPage={currentPbpPage}
+            changePBPPage={changePBPPage}
+            pbpResultsBeginning={pbpResultsBeginning}
+            pbpResultsEnding={pbpResultsEnding}
+            totalPbpResults={totalPbpResults}
+            generateTranscript={generateTranscript}
+            isGenerateDisabled={generateDisabled}
+          /> : ''
+        }
+        {transactionId ?
+          <Transcript
+            transcripts={transcripts}
+            speakers={speakers}
+            refreshAction={retrieveTranscriptStatus}
+          />
+          : ''
+        }
+      </div>
+    </main>
   )
 }
