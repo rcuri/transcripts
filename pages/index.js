@@ -56,7 +56,7 @@ export default function Home() {
       queryStrings.push("period=" + activePeriod)
     }
     const queryStringParameters = queryStrings.join('&')
-    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + game_id + '/?' + queryStringParameters
+    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + game_id + '?' + queryStringParameters
     try {
       const response = await fetch(url)
       if (!response.ok) {
