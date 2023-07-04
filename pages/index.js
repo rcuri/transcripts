@@ -40,7 +40,7 @@ export default function Home() {
     const queryStrings = []
     queryStrings.push("period=" + currentPeriod)
     const queryStringParameters = queryStrings.join('&')
-    const url = 'http://localhost:3000/play_by_play/' + activeGame + '?' + queryStringParameters
+    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + activeGame + '?' + queryStringParameters
     const resp = await fetch(url)
     const playByPlay = await resp.json()
     setPlayByPlay(playByPlay['data'])
@@ -56,7 +56,7 @@ export default function Home() {
       queryStrings.push("period=" + activePeriod)
     }
     const queryStringParameters = queryStrings.join('&')
-    const url = 'http://localhost:3000/play_by_play/' + game_id + '/?' + queryStringParameters
+    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + game_id + '/?' + queryStringParameters
     try {
       const response = await fetch(url)
       if (!response.ok) {
@@ -101,7 +101,7 @@ export default function Home() {
     const currentPeriodString = "period=" + activePeriod
     queryStrings.push(currentPeriodString)
     const queryStringParameters = queryStrings.join('&')
-    const url = 'http://localhost:3000/play_by_play/' + activeGame + '?' + queryStringParameters
+    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + activeGame + '?' + queryStringParameters
     const resp = await fetch(url)
     const playByPlay = await resp.json()
     const pbpData = playByPlay['data']

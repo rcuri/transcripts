@@ -17,7 +17,7 @@ export default function Transcript({ transcripts, speakers, refreshAction }) {
                                                     This will take about 30 seconds. Thank you for your patience.
                                                 </p>
                                             </div>
-                                            <div className=" mt-4 sm:mt-0 sm:ml-16 drop-shadow-md">
+                                            <div className="flex-auto mt-4 sm:mt-0 sm:ml-16 drop-shadow-md">
                                                 <button
                                                     onClick={() => refreshAction()}
                                                     type="button"

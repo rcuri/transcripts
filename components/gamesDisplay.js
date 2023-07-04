@@ -110,7 +110,7 @@ export default function GamesDisplay({ activeGame, setActiveGame, getPlayByPlayD
     }
 
     const queryStringParameters = queryStrings.join('&')
-    const url = 'http://localhost:3000/games?' + queryStringParameters
+    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/games?' + queryStringParameters
     const resp = await fetch(url)
     const games = await resp.json()
     const gamesData = games['data']
@@ -129,20 +129,32 @@ export default function GamesDisplay({ activeGame, setActiveGame, getPlayByPlayD
   }
 
   const getAllGames = async () => {
-    const url = 'http://localhost:3000/games'
-    const resp = await fetch(url)
-    const games = await resp.json()
-    const gamesData = games['data']
-    const pagination = paginate(games['page'], games['total'], games['per_page'])
-    const pageBeginning = pagination['beginning']
-    const pageEnding = pagination['end']
-    setResultBeginning(pageBeginning)
-    setResultEnding(pageEnding)
-    const responseTotalResults = games['total']
-    setTotalResults(responseTotalResults)
-
-    setGames(gamesData)
-    setCurrentGamePage(1)
+    try {
+    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/games'
+    const response = await fetch(url)
+    if (!response.ok) {
+      if (response.status === 404) {
+      } else if (response.status === 403) {
+      } else {
+      }
+      throw new Error(response);
+    }
+    else {
+      const games = await response.json()
+      const gamesData = games['data']
+      const pagination = paginate(games['page'], games['total'], games['per_page'])
+      const pageBeginning = pagination['beginning']
+      const pageEnding = pagination['end']
+      setResultBeginning(pageBeginning)
+      setResultEnding(pageEnding)
+      const responseTotalResults = games['total']
+      setTotalResults(responseTotalResults)
+      setGames(gamesData)
+      setCurrentGamePage(1)
+    }
+    } catch(exception) {
+      console.log(exception)
+  }
   }
 
   const resetGames = async () => {
@@ -164,7 +176,7 @@ export default function GamesDisplay({ activeGame, setActiveGame, getPlayByPlayD
       queryStrings.push("visitor_team_id=" + visitorteam.team_id)
     }
     const queryStringParameters = queryStrings.join('&')
-    const url = 'http://localhost:3000/games?' + queryStringParameters
+    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/games?' + queryStringParameters
     try {
       const response = await fetch(url)
       if (!response.ok) {
