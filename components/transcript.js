@@ -1,9 +1,5 @@
 
 export default function Transcript({ transcripts, speakers, refreshAction }) {
-    const speakers = {
-        'Kevin Harlan': '/kevin-harlan-avatar.png',
-        'Reggie Miller': '/reggie-miller-avatar.png'
-    }
     return (
         <div className="relative flex flex-col bg-rose-950">
             <div className="flex-grow w-full max-w-3xl mx-auto xl:px-8 lg:flex">
@@ -25,14 +21,14 @@ export default function Transcript({ transcripts, speakers, refreshAction }) {
                                                 <button
                                                     onClick={() => refreshAction()}
                                                     type="button"
-                                                    className="drop-shadow-md inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                                                    className="drop-shadow-md inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                                                 >
                                                     Refresh
                                                 </button>
                                             </div>
                                         </div>
                                         {transcripts ?
-                                            <div className="sm:flex sm:items-center mt-8 overflow-y-scroll ring-4 ring-offset-4 px-2 ring-offset-orange-200 ring-purple-200 rounded-lg bg-orange-200 drop-shadow-md">
+                                            <div className="sm:flex sm:items-center mt-8 overflow-y-scroll ring-4 ring-offset-4 px-2 ring-offset-amber-100 ring-red-950 rounded-lg bg-amber-100 drop-shadow-md">
                                                 <ul role="list" className="divide-y divide-gray-200">
                                                     {transcripts.map((transcript) => (
                                                         <li key={transcript.id} className="py-4">
@@ -43,7 +39,7 @@ export default function Transcript({ transcripts, speakers, refreshAction }) {
                                                                         <h3 className="text-sm font-medium">{transcript.speaker_name}</h3>
                                                                         <p className="text-sm text-gray-500">{transcript.time_spoken}</p>
                                                                     </div>
-                                                                    <p className="text-sm text-gray-500">
+                                                                    <p className="text-sm text-slate-800">
                                                                         {transcript.spoken_line}
                                                                     </p>
                                                                 </div>

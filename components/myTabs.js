@@ -20,7 +20,7 @@ export default function MyTabs({ playByPlay, switchTabs }) {
           key={1}
           className={({ selected }) =>
             classNames(
-              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-emerald-800',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white shadow'
@@ -34,7 +34,7 @@ export default function MyTabs({ playByPlay, switchTabs }) {
           key={2}
           className={({ selected }) =>
             classNames(
-              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-emerald-800',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white shadow'
@@ -48,7 +48,7 @@ export default function MyTabs({ playByPlay, switchTabs }) {
           key={3}
           className={({ selected }) =>
             classNames(
-              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-emerald-800',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white shadow'
@@ -62,7 +62,7 @@ export default function MyTabs({ playByPlay, switchTabs }) {
           key={4}
           className={({ selected }) =>
             classNames(
-              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
+              'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-emerald-800',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white shadow'
