@@ -14,7 +14,7 @@ export default function Transcript({ transcripts, speakers, refreshAction }) {
                                             <div className="sm:flex-auto">
                                                 <h1 className="text-xl font-semibold text-gray-900">Transcript</h1>
                                                 <p className="mt-2 text-sm text-gray-700">
-                                                    This will take about 30 seconds. Thank you for your patience.
+                                                    This will take about 10 seconds. Thank you for your patience.
                                                 </p>
                                             </div>
                                             <div className="flex-auto mt-4 sm:mt-0 sm:ml-16 drop-shadow-md">
