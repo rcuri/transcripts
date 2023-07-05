@@ -21,7 +21,7 @@ export default function Landing() {
           </div>
           <p className="mt-2 text-white text-3xl font-extrabold tracking-tight sm:text-8xl">TranscriptAI</p>
           <p className="mt-3 text-lg text-gray-300">
-            If you're like me and can't get enough of Reggie Miller and Kevin Harlan, then you've come to the right place.
+            If you&apos;re like me and can&apos;t get enough of Reggie Miller and Kevin Harlan, then you&apos;ve come to the right place.
             Generate transcripts of your favorite games using play-by-play data.
           </p>
         </div>
