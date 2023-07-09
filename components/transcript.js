@@ -10,21 +10,11 @@ export default function Transcript({ transcripts, speakers, refreshAction }) {
                                 <div className="absolute inset-0 ring-4 ring-offset-4 ring-offset-yellow-100 ring-yellow-500 rounded-lg bg-orange-100 overflow-auto">
                                     <div className="px-4 sm:px-6 lg:px-8 py-6">
                                         <div className="sm:flex sm:items-center">
-
                                             <div className="sm:flex-auto">
                                                 <h1 className="text-xl font-semibold text-gray-900">Transcript</h1>
                                                 <p className="mt-2 text-sm text-gray-700">
-                                                    This will take about 10 seconds. Thank you for your patience.
+                                                    The transcript will take about 15 seconds to generate. Thank you for your patience.
                                                 </p>
-                                            </div>
-                                            <div className="flex-auto mt-4 sm:mt-0 sm:ml-16 drop-shadow-md">
-                                                <button
-                                                    onClick={() => refreshAction()}
-                                                    type="button"
-                                                    className="drop-shadow-md inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                                                >
-                                                    Refresh
-                                                </button>
                                             </div>
                                         </div>
                                         {transcripts ?
