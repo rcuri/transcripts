@@ -1,8 +1,9 @@
 import GamesDisplay from '../components/gamesDisplay'
 import PlayByPlayDisplay from '../components/playByPlayDisplay'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Landing from '../components/landing';
 import Transcript from '../components/transcript';
+import pRetry from 'p-retry';
 import { toast } from "react-toastify";
 
 
@@ -40,7 +41,7 @@ export default function Home() {
     const queryStrings = []
     queryStrings.push("period=" + currentPeriod)
     const queryStringParameters = queryStrings.join('&')
-    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + activeGame + '?' + queryStringParameters
+    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + 'play_by_play/' + activeGame + '?' + queryStringParameters
     const resp = await fetch(url)
     const playByPlay = await resp.json()
     setPlayByPlay(playByPlay['data'])
@@ -56,7 +57,7 @@ export default function Home() {
       queryStrings.push("period=" + activePeriod)
     }
     const queryStringParameters = queryStrings.join('&')
-    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + game_id + '?' + queryStringParameters
+    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + '/play_by_play/' + game_id + '?' + queryStringParameters
     try {
       const response = await fetch(url)
       if (!response.ok) {
@@ -101,7 +102,7 @@ export default function Home() {
     const currentPeriodString = "period=" + activePeriod
     queryStrings.push(currentPeriodString)
     const queryStringParameters = queryStrings.join('&')
-    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/play_by_play/' + activeGame + '?' + queryStringParameters
+    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + '/play_by_play/' + activeGame + '?' + queryStringParameters
     const resp = await fetch(url)
     const playByPlay = await resp.json()
     const pbpData = playByPlay['data']
@@ -124,7 +125,8 @@ export default function Home() {
     }
     body = JSON.stringify(body)
     try {
-      const response = await fetch("https://nq1th2rlqh.execute-api.us-east-1.amazonaws.com/dev/submitTranscriptRequest", {
+      const url = process.env.NEXT_PUBLIC_AWS_TRANSCRIPTS_API_BASE_URL + "/submitTranscriptRequest"
+      const response = await fetch(url, {
         headers: {
           Accept: 'application.json',
           "Content-Type": "application/json",
@@ -151,7 +153,7 @@ export default function Home() {
 
   const retrieveTranscriptStatus = async () => {
     try {
-      const url = "https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/transcripts/" + transactionId
+      const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + "/transcripts/" + transactionId
       const response = await fetch(url);
       if (!response.ok) {
         if (response.status === 429) {
@@ -163,9 +165,21 @@ export default function Home() {
       const transcripts = await response.json();
       const transcriptsData = transcripts['data']
       setTranscripts(transcriptsData)
+      return transcripts
     } catch (exception) {
     }
   }
+
+  useEffect(() => {
+    if (transactionId) {
+      setTimeout(() => pRetry(retrieveTranscriptStatus, {
+        maxTimeout: 3000,
+        retries: 5
+      }
+    ), 12000)
+    }
+
+  }, [transactionId]); 
 
   return (
     <main>

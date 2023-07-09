@@ -110,7 +110,7 @@ export default function GamesDisplay({ activeGame, setActiveGame, getPlayByPlayD
     }
 
     const queryStringParameters = queryStrings.join('&')
-    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/games?' + queryStringParameters
+    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + '/games?' + queryStringParameters
     const resp = await fetch(url)
     const games = await resp.json()
     const gamesData = games['data']
@@ -130,7 +130,7 @@ export default function GamesDisplay({ activeGame, setActiveGame, getPlayByPlayD
 
   const getAllGames = async () => {
     try {
-    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/games'
+    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + '/games'
     const response = await fetch(url)
     if (!response.ok) {
       if (response.status === 404) {
@@ -176,7 +176,7 @@ export default function GamesDisplay({ activeGame, setActiveGame, getPlayByPlayD
       queryStrings.push("visitor_team_id=" + visitorteam.team_id)
     }
     const queryStringParameters = queryStrings.join('&')
-    const url = 'https://qaepfy74ej.execute-api.us-east-1.amazonaws.com/games?' + queryStringParameters
+    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + '/games?' + queryStringParameters
     try {
       const response = await fetch(url)
       if (!response.ok) {
