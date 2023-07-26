@@ -174,10 +174,10 @@ export default function Home() {
   useEffect(() => {
     if (transactionId) {
       setTimeout(() => pRetry(retrieveTranscriptStatus, {
-        maxTimeout: 3000,
+        maxTimeout: 6000,
         retries: 5
       }
-    ), 12000)
+    ), 42000)
     }
 
   }, [transactionId]); 
