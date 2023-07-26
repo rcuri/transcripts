@@ -149,7 +149,7 @@ export default function Home() {
       setTimeout(() => setGenerateDisabled(false), 20000);
     } catch (exception) {
     }
-    toast('Successfully created transcript request. Scroll below and refresh.', { hideProgressBar: true, autoClose: 3500, type: 'success', position: 'bottom-right' })
+    toast('Successfully created transcript request. Scroll below and the transcript will be generated automatically.', { hideProgressBar: true, autoClose: 3500, type: 'success', position: 'bottom-right' })
   }
 
   const retrieveTranscriptStatus = async () => {
