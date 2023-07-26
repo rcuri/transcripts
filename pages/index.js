@@ -41,7 +41,7 @@ export default function Home() {
     const queryStrings = []
     queryStrings.push("period=" + currentPeriod)
     const queryStringParameters = queryStrings.join('&')
-    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + 'play_by_play/' + activeGame + '?' + queryStringParameters
+    const url = process.env.NEXT_PUBLIC_AWS_API_BASE_URL + '/play_by_play/' + activeGame + '?' + queryStringParameters
     const resp = await fetch(url)
     const playByPlay = await resp.json()
     setPlayByPlay(playByPlay['data'])
@@ -125,7 +125,7 @@ export default function Home() {
     }
     body = JSON.stringify(body)
     try {
-      const url = process.env.NEXT_PUBLIC_AWS_TRANSCRIPTS_API_BASE_URL + "/submitTranscriptRequest"
+      const url = process.env.NEXT_PUBLIC_AWS_TRANSCRIPTS_API_BASE_URL + "/transcripts"
       const response = await fetch(url, {
         headers: {
           Accept: 'application.json',
@@ -142,7 +142,8 @@ export default function Home() {
         throw new Error(response);
       }
       const transcripts = await response.json();
-      const transactionId = transcripts['transaction_id']
+      const transactionId = transcripts['transcript_id']
+      console.log(transactionId)
       setTransactionId(transactionId)
       setGenerateDisabled(true)
       setTimeout(() => setGenerateDisabled(false), 20000);
